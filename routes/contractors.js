@@ -5,14 +5,27 @@ const Contractor = require("../models/Contractor");
 // ➕ Create Contractor
 router.post("/", async (req, res) => {
   try {
-    const contractor = new Contractor(req.body);
+    const { name, contactNo, email, address, workCategory, remarks } = req.body;
+
+    const contractor = new Contractor({
+      name,
+      contactNo,
+      email,
+      address,
+      workCategory,
+      remarks,
+    });
+
     await contractor.save();
+
     res.json({
       id: contractor._id,
       name: contractor.name,
-      contact: contractor.contact,
+      contactNo: contractor.contactNo,
       email: contractor.email,
-      address: contractor.address
+      address: contractor.address,
+      workCategory: contractor.workCategory,
+      remarks: contractor.remarks,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -23,13 +36,18 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const contractors = await Contractor.find();
-    res.json(contractors.map(c => ({
-      id: c._id,
-      name: c.name,
-      contact: c.contact,
-      email: c.email,
-      address: c.address
-    })));
+    res.json(
+      contractors.map((c, index) => ({
+        id: c._id,
+        sNo: index + 1, // Serial number
+        name: c.name,
+        contactNo: c.contactNo,
+        email: c.email,
+        address: c.address,
+        workCategory: c.workCategory,
+        remarks: c.remarks,
+      }))
+    );
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -38,18 +56,24 @@ router.get("/", async (req, res) => {
 // ✏️ Update Contractor
 router.put("/:id", async (req, res) => {
   try {
+    const { name, contactNo, email, address, workCategory, remarks } = req.body;
+
     const contractor = await Contractor.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { name, contactNo, email, address, workCategory, remarks },
       { new: true }
     );
+
     if (!contractor) return res.status(404).json({ error: "Not found" });
+
     res.json({
       id: contractor._id,
       name: contractor.name,
-      contact: contractor.contact,
+      contactNo: contractor.contactNo,
       email: contractor.email,
-      address: contractor.address
+      address: contractor.address,
+      workCategory: contractor.workCategory,
+      remarks: contractor.remarks,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -10,9 +10,12 @@ router.post("/", async (req, res) => {
     res.json({
       id: supplier._id,
       name: supplier.name,
-      contact: supplier.contact,
+      contactNo: supplier.contactNo,
       email: supplier.email,
-      address: supplier.address
+      address: supplier.address,
+      category: supplier.category,
+      suppliedItems: supplier.suppliedItems,
+      remarks: supplier.remarks
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -26,9 +29,12 @@ router.get("/", async (req, res) => {
     res.json(suppliers.map(s => ({
       id: s._id,
       name: s.name,
-      contact: s.contact,
+      contactNo: s.contactNo,
       email: s.email,
-      address: s.address
+      address: s.address,
+      category: s.category,
+      suppliedItems: s.suppliedItems,
+      remarks: s.remarks
     })));
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -47,9 +53,12 @@ router.put("/:id", async (req, res) => {
     res.json({
       id: supplier._id,
       name: supplier.name,
-      contact: supplier.contact,
+      contactNo: supplier.contactNo,
       email: supplier.email,
-      address: supplier.address
+      address: supplier.address,
+      category: supplier.category,
+      suppliedItems: supplier.suppliedItems,
+      remarks: supplier.remarks
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
