@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const contractorRoutes = require('./routes/contractors');
 const supplierRoutes = require('./routes/suppliers');
+const wholesalerRoutes = require('./routes/wholesalers');
+const retailSellerRoutes = require('./routes/retailSellers');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,6 +21,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/contractors', contractorRoutes);
 app.use('/api/suppliers', supplierRoutes);
+app.use('/api/wholesalers', wholesalerRoutes);
+app.use('/api/retail-sellers', retailSellerRoutes);
 
 // Root route
 app.get('/', (req, res) => {
